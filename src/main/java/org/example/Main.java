@@ -21,8 +21,10 @@ public class Main {
     {
         HttpRequest request = null;
         try {
+            String githubToken = System.getenv("GITHUB_TOKEN");
             request = HttpRequest.newBuilder()
                     .uri(new URI("https://api.github.com/users/" + username + "/events?per_page=" + numberOfEventsToDisplay))
+                    .header("Authorization", "token " + githubToken)
                     .GET()
                     .build();
         }
@@ -49,9 +51,7 @@ public class Main {
             System.out.println("No username entered. Please enter a valid GitHub username:");
             username = scanner.nextLine();
         }
-        while (true) {
-            try {
-                try (   InputStream inputStream = Main.class.getClassLoader().getResourceAsStream("Logo.txt");
+        try (   InputStream inputStream = Main.class.getClassLoader().getResourceAsStream("Logo.txt");
                      BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
 
                     String line;
@@ -62,6 +62,8 @@ public class Main {
                     e.printStackTrace();
                 }
                 System.out.println("Please wait while we fetch the data of the user...");
+        while (true) {
+            try {
                 HttpResponse<String> response = HttpClient.newBuilder()
                         .build()
                         .send(fetchUserData(username, numberOfEventsToDisplay), HttpResponse.BodyHandlers.ofString());

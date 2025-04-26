@@ -23,7 +23,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.example.Main</mainClass> <!-- Replace with your actual main class -->
+                            <mainClass>org.example.RepoWatchApplication</mainClass> <!-- Replace with your actual main class -->
                         </manifest>
                     </archive>
                 </configuration>
@@ -39,6 +39,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <finalName>repowatch</finalName>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>org.example.Main</mainClass> <!-- adjust if your main class is different -->
